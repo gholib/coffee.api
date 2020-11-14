@@ -17,7 +17,10 @@ class CreateMenuItemsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('display_name');
-            $table->smallInteger('price');
+            $table->float('price');
+            $table->float('cost_price');
+            $table->bigInteger('branch_id')->default(1);
+            $table->bigInteger('import_type_id');
             $table->timestamps();
         });
     }

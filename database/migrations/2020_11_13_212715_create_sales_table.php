@@ -17,6 +17,7 @@ class CreateSalesTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('menu_item_id');
             $table->date('sale_date');
+            $table->bigInteger('branch_id')->default(1);
             $table->timestamps();
         });
     }

@@ -9,8 +9,15 @@ Route::group(['middleware' => 'cors'], function () {
 Route::group(['middleware' => ['auth.jwt', 'cors']], function () {
     Route::get('logout', 'Auth\AuthController@logout');
 
+    Route::group(['prefix' => 'branches'], function () {
+        Route::get('/', 'BranchController@getAll');
+    });
+
     Route::group(['prefix' => 'import-types'], function () {
         Route::get('/', 'ImportTypeController@getAll');
+        Route::post('/', 'ImportTypeController@store')->middleware('admin');
+        Route::post('/{import_type_id}', 'ImportTypeController@update')->middleware('admin');
+        Route::delete('/{import_type_id}', 'ImportTypeController@destroy')->middleware('admin');
     });
 
     Route::group(['prefix' => 'menu-items'], function () {

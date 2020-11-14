@@ -18,6 +18,7 @@ class CreateImportsTable extends Migration
             $table->bigInteger('import_type_id');
             $table->smallInteger('quantity');
             $table->integer('price');
+            $table->bigInteger('branch_id')->default(1);
             $table->date('import_date');
             $table->timestamps();
         });

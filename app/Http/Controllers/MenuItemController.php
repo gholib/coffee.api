@@ -23,6 +23,8 @@ class MenuItemController extends Controller
         $menuItem->name = TextConverter::convertToLatin($requiest->display_name);
         $menuItem->display_name = $requiest->display_name;
         $menuItem->price = $requiest->price;
+        $menuItem->cost_price = $requiest->cost_price;
+        $menuItem->import_type_id = $requiest->import_type_id;
 
         $menuItem->save();
 
@@ -36,6 +38,8 @@ class MenuItemController extends Controller
         $menuItem->name = TextConverter::convertToLatin($requiest->display_name);
         $menuItem->display_name = $requiest->display_name;
         $menuItem->price = $requiest->price;
+        $menuItem->cost_price = $requiest->cost_price;
+        $menuItem->import_type_id = $requiest->import_type_id;
 
         $menuItem->update();
 

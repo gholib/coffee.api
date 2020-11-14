@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MenuItemStoreRequiest extends FormRequest
+class ImportTypeStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +26,6 @@ class MenuItemStoreRequiest extends FormRequest
         return [
             'display_name' => 'required',
             'price' => 'required',
-            'import_type_id' => 'required',
-            'cost_price' => 'required'
         ];
     }
 

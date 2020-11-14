@@ -29,6 +29,7 @@ class SaleController extends Controller
     {
         $calculations = Sale::select(DB::raw('COUNT(menu_item_id) as count'),
             'menu_items.price',
+            'menu_items.cost_price',
             'menu_items.display_name')
             ->join('menu_items', function ($join) {
                 $join->on('sales.menu_item_id', '=', 'menu_items.id');

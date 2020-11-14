@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateImportTypesTable extends Migration
+class CreateBranchesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,19 @@ class CreateImportTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('import_types', function (Blueprint $table) {
+        Schema::create('branches', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('display_name');
-            $table->bigInteger('branch_id')->default(1);
-            $table->float('price');
             $table->timestamps();
         });
+
+        \Illuminate\Support\Facades\DB::table('branches')->insert([
+            [
+                'name' => 'punktA',
+                'display_name' => 'Точка А'
+            ],
+        ]);
     }
 
     /**
@@ -30,6 +35,6 @@ class CreateImportTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('import_types');
+        Schema::dropIfExists('branches');
     }
 }

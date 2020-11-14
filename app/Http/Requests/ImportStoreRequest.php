@@ -25,9 +25,8 @@ class ImportStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'import_type_id' => ['required', new IsImportExists()],
+            'import_type_id' => 'required',
             'quantity' => 'required',
-            'price' => 'required',
         ];
     }
 
