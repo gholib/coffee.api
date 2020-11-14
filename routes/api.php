@@ -13,11 +13,11 @@ Route::group(['middleware' => ['auth.jwt', 'cors']], function () {
         Route::get('/', 'ImportTypeController@getAll');
     });
 
-    Route::group(['prefix' => 'menu-items', 'middleware' => 'admin'], function () {
+    Route::group(['prefix' => 'menu-items'], function () {
         Route::get('/', 'MenuItemController@getAll');
-        Route::post('/', 'MenuItemController@store');
-        Route::post('/{menu_item_id}', 'MenuItemController@update');
-        Route::delete('/{menu_item_id}', 'MenuItemController@destroy');
+        Route::post('/', 'MenuItemController@store')->middleware('admin');
+        Route::post('/{menu_item_id}', 'MenuItemController@update')->middleware('admin');
+        Route::delete('/{menu_item_id}', 'MenuItemController@destroy')->middleware('admin');
     });
 
     Route::post('pay', 'SaleController@store');
