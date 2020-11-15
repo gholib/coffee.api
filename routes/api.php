@@ -29,6 +29,7 @@ Route::group(['middleware' => ['auth.jwt', 'cors']], function () {
 
     Route::post('pay', 'SaleController@store');
     Route::get('calculation', 'SaleController@calculation');
+    Route::get('leftovers', 'SaleController@getLeftOvers');
 
     Route::group(['prefix' => 'import', 'middleware' => 'admin'], function () {
         Route::post('/', 'ImportController@store');
