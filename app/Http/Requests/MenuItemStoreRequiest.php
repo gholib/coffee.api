@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\ValidCostPrice;
 use Illuminate\Foundation\Http\FormRequest;
 
 class MenuItemStoreRequiest extends FormRequest
@@ -27,7 +28,7 @@ class MenuItemStoreRequiest extends FormRequest
             'display_name' => 'required',
             'price' => 'required',
             'import_type_id' => 'required',
-            'cost_price' => 'required'
+            'cost_price' => ['required', new ValidCostPrice($this->price)]
         ];
     }
 
