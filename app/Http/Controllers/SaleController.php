@@ -60,7 +60,7 @@ class SaleController extends Controller
             ->leftJoin('imports', function ($join) {
                 $join->on('menu_items.import_type_id', '=', 'imports.import_type_id');
             })
-            ->groupBy('menu_item_id')
+            ->groupBy('menu_items.import_type_id')
             ->get();
 
         return compact('calculations');
