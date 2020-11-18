@@ -48,7 +48,7 @@ class SaleController extends Controller
         $imports = Import::select(DB::raw('COUNT(import_type_id) as count'),
             DB::raw('SUM(quantity) as import_quantity'),
             'import_types.name as import_name',
-            'import_types.display_name as import_display_name',)
+            'import_types.display_name as import_display_name')
             ->join('import_types', function ($join) {
                 $join->on('imports.import_type_id', '=', 'import_types.id');
             })
