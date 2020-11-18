@@ -6,6 +6,29 @@ Route::group(['middleware' => 'cors'], function () {
     Route::get('/images/{path}', 'MediaController@getImage');
 });
 
+Route::get('/test', function () {
+    $calculations = \App\Sale::select(\Illuminate\Support\Facades\DB::raw('COUNT(menu_item_id) as count'),
+        'menu_items.price',
+        'menu_items.cost_price',
+        'menu_items.display_name',
+        'import_types.display_name as import_display_name',
+        'import_types.price as import_price')
+        ->join('menu_items', function ($join) {
+            $join->on('sales.menu_item_id', '=', 'menu_items.id');
+        })
+        ->join('import_types', function ($join) {
+            $join->on('menu_items.import_type_id', '=', 'import_types.id');
+        })
+        ->groupBy('menu_items.import_type_id')
+        ->get()->toArray();
+    $imports = \App\Import::select(\Illuminate\Support\Facades\DB::raw('COUNT(import_type_id) as count'),
+        \Illuminate\Support\Facades\DB::raw('SUM(quantity) as import_quantity'),
+        'import_types.name as import_name')
+        ->groupBy('import_type_id')
+        ->get()->toArray();
+    dd($calculations);
+});
+
 Route::group(['middleware' => ['auth.jwt', 'cors']], function () {
     Route::get('logout', 'Auth\AuthController@logout');
 

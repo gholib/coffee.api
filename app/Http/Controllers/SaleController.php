@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SaleStoreRequest;
+use App\Import;
 use App\Sale;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -44,25 +45,30 @@ class SaleController extends Controller
 
     public function getLeftOvers()
     {
-        $calculations = Sale::select(DB::raw('COUNT(menu_item_id) as count'),
+        $imports = Import::select(DB::raw('COUNT(import_type_id) as count'),
+            DB::raw('SUM(quantity) as import_quantity'),
+            'import_types.name as import_name',
+            'import_types.display_name as import_display_name',)
+            ->join('import_types', function ($join) {
+                $join->on('imports.import_type_id', '=', 'import_types.id');
+            })
+            ->groupBy('import_type_id')
+            ->get()->toArray();
+        $sales = Sale::select(DB::raw('COUNT(menu_item_id) as count'),
             'menu_items.price',
             'menu_items.cost_price',
             'menu_items.display_name',
-            'import_types.display_name as import_display_name',
             'import_types.price as import_price',
-            'imports.quantity as import_quantity')
+            'import_types.name as import_name')
             ->join('menu_items', function ($join) {
                 $join->on('sales.menu_item_id', '=', 'menu_items.id');
             })
             ->join('import_types', function ($join) {
                 $join->on('menu_items.import_type_id', '=', 'import_types.id');
             })
-            ->leftJoin('imports', function ($join) {
-                $join->on('menu_items.import_type_id', '=', 'imports.import_type_id');
-            })
             ->groupBy('menu_items.import_type_id')
             ->get();
 
-        return compact('calculations');
+        return compact('sales', 'imports');
     }
 }
